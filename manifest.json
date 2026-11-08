@@ -1,0 +1,10 @@
+{
+  "id": "hollow-knight-hallownest",
+  "name": "Hollow Knight and Silksong Companion",
+  "version": "1.0.0",
+  "minAppVersion": "1.5.0",
+  "description": "Turn empty tabs into a Hallownest or Pharloom title screen with game-style menus, area title cards, a soul vessel HUD and a bench rest on save.",
+  "author": "SentientShawarma",
+  "isDesktopOnly": false,
+  "authorUrl": "https://github.com/abdullahhasan42"
+}
