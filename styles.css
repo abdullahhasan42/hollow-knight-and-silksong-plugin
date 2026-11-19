@@ -126,12 +126,13 @@
 	overflow-wrap: normal;
 }
 
+/* Three equal-sided tracks: the separator sits on the vault name's center line. */
 .hk-title-sub {
-	display: flex;
-	flex-wrap: wrap;
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
 	align-items: center;
-	justify-content: center;
 	gap: 0.7em;
+	width: 100%;
 	font-family: var(--hkp-body);
 	font-style: italic;
 	font-size: 1.1rem;
@@ -139,12 +140,21 @@
 	animation: hk-fade-in 1.2s 0.7s both;
 }
 
+.hk-title-date {
+	justify-self: end;
+}
+
+.hk-title-clock {
+	justify-self: start;
+}
+
 .hk-title-dot svg {
 	display: block;
-	width: 7px;
-	height: 7px;
+	width: 12px;
+	height: 14px;
+	fill: currentColor;
 	color: var(--hkp-ornament);
-	opacity: 0.6;
+	opacity: 0.7;
 }
 
 .hk-title-menu {
@@ -982,7 +992,8 @@ button.hk-slot.is-selected .hk-corners {
 .hk-inv-desc {
 	min-height: 200px;
 	justify-content: center;
-	text-align: left;
+	align-items: center;
+	text-align: center;
 }
 
 /* ----- Medallion arc ----- */

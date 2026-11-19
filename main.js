@@ -193,6 +193,8 @@ const SVG = {
 		'<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 3 C 5 9, 11 9, 14 3" fill="none" stroke="currentColor" stroke-width="0.8"/><circle cx="3.6" cy="5.4" r="1.9" fill="currentColor"/><circle cx="8" cy="7.6" r="2.2" fill="currentColor"/><circle cx="12.4" cy="5.4" r="1.9" fill="currentColor"/><path d="M8 9.8 L8 14" stroke="currentColor" stroke-width="1"/><circle cx="8" cy="14.2" r="1.2" fill="currentColor"/></svg>',
 	crest:
 		'<svg viewBox="0 0 12 12" aria-hidden="true"><path fill-rule="evenodd" d="M6 0.5 L10 6 L6 11.5 L2 6 Z M6 3.6 L4.3 6 L6 8.4 L7.7 6 Z" fill="currentColor"/></svg>',
+	silkbell:
+		'<svg viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0.3 L6 3" fill="none" stroke="currentColor" stroke-width="0.9" stroke-linecap="round"/><path d="M6 2.8 C 3.3 2.8 2.8 5.8 2.4 9.4 L1 11.2 L11 11.2 L9.6 9.4 C 9.2 5.8 8.7 2.8 6 2.8 Z" fill="currentColor"/><circle cx="6" cy="12.6" r="1.1" fill="currentColor"/></svg>',
 };
 
 /* -------------------------------------------------------------------------
@@ -630,7 +632,7 @@ class TitleView extends ItemView {
 
 		const sub = frame.createDiv({ cls: "hk-title-sub" });
 		const when = sub.createSpan({ cls: "hk-title-date" });
-		svgEl(sub, "hk-title-dot", SVG.crest);
+		svgEl(sub, "hk-title-dot", pharloom ? SVG.silkbell : SVG.mask);
 		const time = sub.createSpan({ cls: "hk-title-clock" });
 		const tick = () => {
 			const now = new Date();
