@@ -209,6 +209,18 @@ function bodyHas(cls) {
 	return document.body.classList.contains(cls);
 }
 
+// The pane hosting an area card or bench glow gets a class so CSS can position it
+// without a costly :has() selector. The class drops once no effect is left.
+function markHost(host) {
+	host.addClass("hk-fx-host");
+}
+
+function releaseHost(host) {
+	if (!host.querySelector(":scope > .hk-area-card, :scope > .hk-bench-glow")) {
+		host.removeClass("hk-fx-host");
+	}
+}
+
 function cssNumber(name, fallback) {
 	const raw = getComputedStyle(document.body).getPropertyValue(name);
 	const value = parseFloat(raw);
@@ -1292,6 +1304,7 @@ module.exports = class HallownestPlugin extends Plugin {
 			this.bodyWatch.disconnect();
 		}
 		document.querySelectorAll(".hk-area-card, .hk-bench-glow").forEach((el) => el.remove());
+		document.querySelectorAll(".hk-fx-host").forEach((el) => el.removeClass("hk-fx-host"));
 	}
 
 	async loadSettings() {
@@ -1683,6 +1696,7 @@ module.exports = class HallownestPlugin extends Plugin {
 		const fadeOut = still ? 0.2 : 0.6;
 		const total = fadeIn + hold + fadeOut;
 
+		markHost(host);
 		const card = host.createDiv({ cls: "hk-area-card", attr: { "aria-hidden": "true" } });
 		card.toggleClass("is-pharloom", pharloom);
 		card.dataset.hold = String(hold);
@@ -1691,7 +1705,10 @@ module.exports = class HallownestPlugin extends Plugin {
 		const name = card.createDiv({ cls: "hk-area-name", text: file.basename });
 		svgEl(card, "hk-area-rule", pharloom ? SVG.bell : SVG.divider);
 
-		const remove = () => card.remove();
+		const remove = () => {
+			card.remove();
+			releaseHost(host);
+		};
 		if (typeof card.animate !== "function") {
 			card.addClass("is-shown");
 			window.setTimeout(remove, total * 1000);
@@ -1957,6 +1974,7 @@ module.exports = class HallownestPlugin extends Plugin {
 		if (view && !reducedMotion()) {
 			const host = view.containerEl;
 			host.querySelectorAll(".hk-bench-glow").forEach((el) => el.remove());
+			markHost(host);
 			const glow = host.createDiv({ cls: "hk-bench-glow", attr: { "aria-hidden": "true" } });
 			glow.toggleClass("is-pharloom", isPharloom());
 			for (let i = 0; i < 14; i += 1) {
@@ -1965,7 +1983,10 @@ module.exports = class HallownestPlugin extends Plugin {
 				spark.style.setProperty("--hk-spark-delay", `${(Math.random() * 0.5).toFixed(2)}s`);
 				spark.style.setProperty("--hk-drift", `${Math.round((Math.random() - 0.5) * 40)}px`);
 			}
-			window.setTimeout(() => glow.remove(), 2200);
+			window.setTimeout(() => {
+				glow.remove();
+				releaseHost(host);
+			}, 2200);
 		}
 		const fragment = createFragment((frag) => {
 			const crest = frag.createSpan({ cls: "hk-notice-crest" });

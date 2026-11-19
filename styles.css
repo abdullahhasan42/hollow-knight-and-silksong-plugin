@@ -404,8 +404,8 @@ button.hk-title-link:focus-visible {
 /* ==========================================================================
    Area title card
    ========================================================================== */
-.workspace-leaf-content:has(> .hk-area-card),
-.workspace-leaf-content:has(> .hk-bench-glow) {
+/* main.js adds .hk-fx-host while a card or glow is shown (avoids a costly :has selector). */
+.workspace-leaf-content.hk-fx-host {
 	position: relative;
 }
 
